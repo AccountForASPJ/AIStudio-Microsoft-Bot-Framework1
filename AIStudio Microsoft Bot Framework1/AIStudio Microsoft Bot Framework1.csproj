@@ -180,13 +180,17 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Dialogs\VPNDialog.cs" />
+    <Compile Include="Dialogs\WebDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\NLP\NBINFiles\Coref.zip" />
     <Content Include="App_Data\NLP\NBINFiles\Coref\acronyms" />
     <Content Include="App_Data\NLP\NBINFiles\Coref\cmodel.nbin" />

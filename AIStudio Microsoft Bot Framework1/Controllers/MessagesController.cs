@@ -1,8 +1,11 @@
-﻿using Microsoft.Bot.Builder.Dialogs;
+﻿using AIStudio_Microsoft_Bot_Framework1.Dialogs;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -193,21 +196,31 @@ namespace AIStudio_Microsoft_Bot_Framework1
     {
         [LuisIntent("Greetings")]
         public async Task Greetings(IDialogContext context, LuisResult result)
-        {
+        {   
             await context.PostAsync("Hi, I am SCloud bot. How may I help you?");
         }
+        
 
         [LuisIntent("Problem")]
         public async Task Problem(IDialogContext context, LuisResult result)
         {
-            String msg = result.Query.ToLower();
+            String msg = "";
+            Debug.WriteLine(result.Entities.Count);
+            foreach (EntityRecommendation er in result.Entities)
+            {
+                msg += er.Entity;
+                Debug.WriteLine("er: "+ msg);
+            }
             if (msg.Contains("vpn") && msg.Contains("website"))
             {
-                await context.PostAsync("You are having problems with your vpn and vpn");
+                await context.PostAsync("You are having problems with your vpn and website");
+                    
             }
             if (msg.Contains("vpn"))
             {
                 await context.PostAsync("You are having problems with your vpn");
+                context.Call(new VPNDialog(), HandOverTask);
+
             }
             else if (msg.Contains("website"))
             {
@@ -215,14 +228,12 @@ namespace AIStudio_Microsoft_Bot_Framework1
             }
             else
             {
-                await context.PostAsync("You are having problems");
+                await context.PostAsync("What kind of problem are you facing?");
             }
         }
-
-        [LuisIntent("Request")]
-        public async Task Request(IDialogContext context, LuisResult result)
+        private async Task HandOverTask(IDialogContext context, IAwaitable<Boolean> result)
         {
-            await context.PostAsync("What kind of problem are you facing?");
+            await context.PostAsync("Thank you!");
         }
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result)
