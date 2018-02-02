@@ -13,6 +13,7 @@ namespace AIStudio_Microsoft_Bot_Framework1.Dialogs
     {
         public async Task StartAsync(IDialogContext context)
         {
+            
             PromptDialog.Choice(
                 context: context,
               resume: receivedProblem,
@@ -48,9 +49,9 @@ namespace AIStudio_Microsoft_Bot_Framework1.Dialogs
                     break;
                 case '3':
                     //"3. I don't know how to use OpenVPN.",
-                    await context.PostAsync("1. Copy/move the VPN cert to <OPENVPN_INSTALLATION_FOLDER>/config/ directory\n" +
+                    await context.PostAsync("1. Copy/move the VPN cert to <OPENVPN_INSTALLATION_FOLDER>/config/directory\n" +
                             "2. For Windows computer, the default OpenVPN installation folder is at C:\\Program Files\\OpenVPN \n"+
-                            "3. Open a command prompt, run the following command: \n\n        cd <OPENVPN_INSTALLATION_FOLDER> /bin/\n\n        openvpn ../config/client.ovpn");
+                            "3. Open a command prompt, run the following command: \n\n        cd <OPENVPN_INSTALLATION_FOLDER>/bin/\n\n        openvpn ../config/client.ovpn");
                     break;
                 case '4':
                     //"4. I don't know how to install OpenVPN."

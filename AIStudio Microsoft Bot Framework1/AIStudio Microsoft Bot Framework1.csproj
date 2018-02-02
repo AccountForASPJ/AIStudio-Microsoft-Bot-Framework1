@@ -180,7 +180,9 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Dialogs\FeatureDialog.cs" />
     <Compile Include="Dialogs\VPNDialog.cs" />
+    <Compile Include="Dialogs\VPNTutorialDialog.cs" />
     <Compile Include="Dialogs\WebDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

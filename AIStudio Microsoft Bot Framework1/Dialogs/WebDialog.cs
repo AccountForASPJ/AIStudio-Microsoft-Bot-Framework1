@@ -8,7 +8,7 @@ using System.Web;
 namespace AIStudio_Microsoft_Bot_Framework1.Dialogs
 {
     [Serializable]
-    public class WebDialog : IDialog<Boolean>:
+    public class WebDialog : IDialog<Boolean>
     {
         public async Task StartAsync(IDialogContext context)
         {

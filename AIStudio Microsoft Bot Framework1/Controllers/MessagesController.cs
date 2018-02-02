@@ -64,7 +64,7 @@ namespace AIStudio_Microsoft_Bot_Framework1
                             if (newMember.Id != activity.Recipient.Id)
                             {
                                 var reply = activity.CreateReply();
-                                reply.Text = $"Welcome {newMember.Name}!";
+                                reply.Text = $"Hi, I am SCloud Bot. How may I help you?";
                                 await client.Conversations.ReplyToActivityAsync(reply);
                             }
                         }
@@ -200,7 +200,6 @@ namespace AIStudio_Microsoft_Bot_Framework1
             await context.PostAsync("Hi, I am SCloud bot. How may I help you?");
         }
         
-
         [LuisIntent("Problem")]
         public async Task Problem(IDialogContext context, LuisResult result)
         {
@@ -213,10 +212,11 @@ namespace AIStudio_Microsoft_Bot_Framework1
             }
             if (msg.Contains("vpn") && msg.Contains("website"))
             {
-                await context.PostAsync("You are having problems with your vpn and website");
-                    
+                await context.PostAsync("You are having problems with your vpn and website\n\nWe will try to solve your VPN problem first. ");
+                context.Call(new VPNDialog(), SolveWebProblem);
+                
             }
-            if (msg.Contains("vpn"))
+            else if (msg.Contains("vpn"))
             {
                 await context.PostAsync("You are having problems with your vpn");
                 context.Call(new VPNDialog(), HandOverTask);
@@ -225,15 +225,56 @@ namespace AIStudio_Microsoft_Bot_Framework1
             else if (msg.Contains("website"))
             {
                 await context.PostAsync("You are having problems with your website");
+                context.Call(new WebDialog(), HandOverTask);
             }
             else
             {
                 await context.PostAsync("What kind of problem are you facing?");
             }
         }
+        [LuisIntent("Help")]
+        public async Task Help(IDialogContext context, LuisResult result)
+        {
+            String msg = "";
+            foreach (EntityRecommendation er in result.Entities)
+            {
+                msg += er.Entity;
+                Debug.WriteLine("er: " + msg);
+            }
+            if (msg.Contains("vpn") && msg.Contains("website"))
+            {
+                await context.PostAsync("");
+                
+            }
+            else if (msg.Contains("vpn"))
+            {
+                context.Call(new VPNTutorialDialog(), HandOverTask);
+
+            }
+            else if (msg.Contains("website"))
+            {
+                await context.PostAsync("I will guide you through website.");
+                context.Call(new WebDialog(), HandOverTask);
+            }
+            else
+            {
+                await context.PostAsync("What kind of help do you need?");
+            }
+        }
+        [LuisIntent("Feature")]
+        public async Task Feature(IDialogContext context, LuisResult result)
+        {
+            context.Call(new FeatureDialog(), HandOverTask);
+        }
         private async Task HandOverTask(IDialogContext context, IAwaitable<Boolean> result)
         {
             await context.PostAsync("Thank you!");
+        }
+
+        private async Task SolveWebProblem(IDialogContext context, IAwaitable<Boolean> result)
+        {
+            await context.PostAsync("You still have a problem with your Website.");
+            context.Call(new WebDialog(), HandOverTask);
         }
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result)
