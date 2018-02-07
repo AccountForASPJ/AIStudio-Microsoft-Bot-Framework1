@@ -199,7 +199,12 @@ namespace AIStudio_Microsoft_Bot_Framework1
         {   
             await context.PostAsync("Hi, I am SCloud bot. How may I help you?");
         }
-        
+
+        [LuisIntent("Started")]
+        public async Task Started(IDialogContext context, LuisResult result)
+        {
+            context.Call(new GettingStartedDialog(), HandOverTask);
+        }
         [LuisIntent("Problem")]
         public async Task Problem(IDialogContext context, LuisResult result)
         {
@@ -243,18 +248,19 @@ namespace AIStudio_Microsoft_Bot_Framework1
             }
             if (msg.Contains("vpn") && msg.Contains("website"))
             {
-                await context.PostAsync("");
-                
+                await context.PostAsync("What kind of help do you need?");
+
             }
             else if (msg.Contains("vpn"))
             {
+                await context.PostAsync("I will now guide you through connecting to VPN");
                 context.Call(new VPNTutorialDialog(), HandOverTask);
 
             }
             else if (msg.Contains("website"))
             {
                 await context.PostAsync("I will guide you through website.");
-                context.Call(new WebDialog(), HandOverTask);
+                context.Call(new WebTutorialDialog(), HandOverTask);
             }
             else
             {
@@ -268,7 +274,16 @@ namespace AIStudio_Microsoft_Bot_Framework1
         }
         private async Task HandOverTask(IDialogContext context, IAwaitable<Boolean> result)
         {
-            await context.PostAsync("Thank you!");
+            bool succ = await result;
+            if (succ)
+            {
+                await context.PostAsync("Hi, I am SCloud bot. How may I help you?");
+            }
+            else
+            {
+                await context.PostAsync("Can repeat what you said?");
+            }
+            
         }
 
         private async Task SolveWebProblem(IDialogContext context, IAwaitable<Boolean> result)
@@ -280,7 +295,7 @@ namespace AIStudio_Microsoft_Bot_Framework1
         public async Task None(IDialogContext context, LuisResult result)
         {
 
-            string message = $"I'm SCloud Bot. \n\n Detected intent: " + string.Join(", ", result.Intents.Select(i => i.Intent));
+            string message = "Sorry I didn't understand what you just said. What do you want me to do?";
             await context.PostAsync(message);
             context.Wait(MessageReceived);
         }

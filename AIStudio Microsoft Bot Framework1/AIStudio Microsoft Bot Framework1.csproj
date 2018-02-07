@@ -172,6 +172,16 @@
     <Content Include="App_Data\NLP\xxWordMatch\dict\dbfiles\verb.contact" />
     <Content Include="default.htm" />
     <Content Include="Global.asax" />
+    <Content Include="image\authorize.PNG" />
+    <Content Include="image\collab.PNG" />
+    <Content Include="image\create.PNG" />
+    <Content Include="image\personal1.PNG" />
+    <Content Include="image\personal3.PNG" />
+    <Content Include="image\personal4.PNG" />
+    <Content Include="image\personal_pass.PNG" />
+    <Content Include="image\wizard1.PNG" />
+    <Content Include="image\wizard2.PNG" />
+    <Content Include="image\wizard3.PNG" />
     <Content Include="readme.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -181,9 +191,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\FeatureDialog.cs" />
+    <Compile Include="Dialogs\GettingStartedDialog.cs" />
     <Compile Include="Dialogs\VPNDialog.cs" />
     <Compile Include="Dialogs\VPNTutorialDialog.cs" />
     <Compile Include="Dialogs\WebDialog.cs" />
+    <Compile Include="Dialogs\WebTutorialDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -12,19 +12,18 @@ namespace AIStudio_Microsoft_Bot_Framework1.Dialogs
     {
         public async Task StartAsync(IDialogContext context)
         {
-            await context.PostAsync("I will now guide you through connecting to VPN");
+            
             await context.PostAsync("Please download and install OpenVPN from https://openvpn.net/index.php/open-source/downloads.html. \n\n" +
                             "For Windows computer, you may follow the instruction at https://openvpn.net/index.php/access-server/docs/admin-guides-sp-859543150/howto-connect-client-configuration/395-how-to-install-the-openvpn-client-on-windows.html. \n");
             PromptDialog.Confirm(context, StepTwo, "Please Confirm after you have complete the above step"
                 , attempts: 1, promptStyle: PromptStyle.Auto);
 
-        
         }
         public async Task StepTwo(IDialogContext context, IAwaitable<bool> result)
         {
             if (await result)
             {
-                await context.PostAsync("Please request a OpenVPN certificate from the external website");
+                await context.PostAsync("Please download your OpenVPN certificate from the external website or you can download it at https://www.nypscloud.net/Home/GenerateKey");
                 PromptDialog.Confirm(context, StepThree, "Please Confirm after you have complete the above step"
                     , attempts: 1, promptStyle: PromptStyle.Auto);
 
@@ -42,7 +41,7 @@ namespace AIStudio_Microsoft_Bot_Framework1.Dialogs
         {
             if (await result)
             {
-                await context.PostAsync("Copy/move the VPN cert to <OPENVPN_INSTALLATION_FOLDER>/config/ directory\n\n" +
+                await context.PostAsync("Extract all the config files to <OPENVPN_INSTALLATION_FOLDER>/config/ directory\n\n" +
                             "   For Windows computer, the default OpenVPN installation folder is at C:\\Program Files\\OpenVPN \n");
                 PromptDialog.Confirm(context, StepFour, "Please Confirm after you have complete the above step"
                     , attempts: 1, promptStyle: PromptStyle.Auto);
@@ -50,7 +49,7 @@ namespace AIStudio_Microsoft_Bot_Framework1.Dialogs
             }
             else
             {
-                await context.PostAsync("Please requested a OpenVPN certificate from the external website");
+                await context.PostAsync("Please download your OpenVPN certificate from the external website or you can download it at https://www.nypscloud.net/Home/GenerateKey");
                 PromptDialog.Confirm(context, StepThree, "Please Confirm after you have complete the above step"
                     , attempts: 1, promptStyle: PromptStyle.Auto);
             }
@@ -83,7 +82,7 @@ namespace AIStudio_Microsoft_Bot_Framework1.Dialogs
             }
             else
             {
-                await context.PostAsync("Open a command prompt, press Win key -> Search for cmd -> Run command prompt, run the following command: \n\n        cd <OPENVPN_INSTALLATION_FOLDER>/bin/\n\n        openvpn ../config/client.ovpn");
+                await context.PostAsync("Open a command prompt, press Win key -> Search for cmd -> Run command prompt, run the following command: \n\n        cd <OPENVPN_INSTALLATION_FOLDER>\n\n        bin\\openvpn ..\\config\\client.ovpn");
                 PromptDialog.Confirm(context, StepFive, "Please Confirm after you have complete the above step"
                     , attempts: 1, promptStyle: PromptStyle.Auto);
             }
